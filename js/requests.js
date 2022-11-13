@@ -23,11 +23,12 @@ function get_request_options(payload){
 
 
 function get_ldr_values(){
-    const payload = 'query{espTransmissions(macAddress_Icontains: "5935393336311228") {ldrSensor datetimeOrigin}}';
+    const payload = '{"query": "query{espTransmissions(macAddress_Icontains: \\\"5935393336311228\\\") {ldrSensor datetimeOrigin}}"}';
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)
     .then(response => {
+        console.log(response);
         return response['data']['espTransmissions'];
     })
     .catch(err => {
