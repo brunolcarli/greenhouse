@@ -30,7 +30,7 @@
 
     <title>Greenhouse</title>
   </head>
-  <body style="background-color: rgba(204, 200, 200, 0.466)">
+  <body style="background-color: rgba(204, 200, 200, 0.466)" onload="plot_ldr_values()">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -72,6 +72,11 @@
     >
 
       <hr class="my-4" />
+
+      <!-- DYNAMIC CHART -->
+      <div id="dynamic_chart">
+        <canvas id="DynamicChart" width="350" height="400"></canvas>
+      </div>
 
       Página em desenvolvimento
 
