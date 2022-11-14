@@ -22,13 +22,12 @@ function get_request_options(payload){
 }
 
 
-function get_ldr_values(){
-    const payload = '{"query": "query{espTransmissions(macAddress_Icontains: \\\"5935393336311228\\\") {ldrSensor datetimeOrigin}}"}';
+function get_transmission_values(){
+    const payload = '{"query": "query{espTransmissions(macAddress_Icontains: \\\"5935393336311228\\\") {ldrSensor temperatureSensor pressure moisture datetimeOrigin}}"}';
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)
     .then(response => {
-        console.log(response);
         return response['data']['espTransmissions'];
     })
     .catch(err => {
@@ -36,3 +35,16 @@ function get_ldr_values(){
     });
 }
 
+
+function get_map_installations(){
+    const payload = '{"query": "query{installations{reference latitude longitude device {transmissionCount}}}"}';
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['installations'];
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
