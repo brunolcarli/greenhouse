@@ -27,6 +27,7 @@
     <!-- Owner code -->
     <script src="js/requests.js"></script>
     <script src="js/plots.js"></script>
+    <script src="js/resolvers.js"></script>
 
     <!-- MAP CHART -->
     <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js" type="text/javascript"></script>
@@ -44,7 +45,7 @@
 
     <title>Greenhouse</title>
   </head>
-  <body style="background-color: rgba(204, 200, 200, 0.466)" onload="plot_transmission_values()">
+  <body style="background-color: rgba(204, 200, 200, 0.466)">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -84,48 +85,58 @@
       class="jumbotron bg-dark text-light py-4 m-0"
       style="border-radius: 0"
     >
+        <!-- MAP VIEW-->
+        <div id="world_map_index_page" style="width: 100%; height: 500px;"></div>
+        <br /><hr />
+        <h3>Selecione uma instalação</h3>
+        <!-- Filter Input -->
+        <div class="input-group flex-nowrap">
+            <span class="input-group-text">&#x1f4c5</span>
+            <select name="date_range_selection" id="date_range_selection">
+            <option value="0">Hoje</option>
+            <option value="L24">Últimas 24 horas</option>
+            <option value="2">Últimos 2 dias</option>
+            <option value="5">Últimos 5 dias</option>
+            <option value="8">Últimos 7 dias</option>
+            <option value="15">Últimos 15 dias</option>
+            <option value="30">Últimos 30 dias</option>
+            <option value="ALL">Tudo</option>
+            </select>
 
-    <!-- MAP VIEW-->
-    <div id="world_map_index_page" style="width: 100%; height: 500px;"></div>
+            <div id="installation_select_index_page" class="input-group flex-nowrap">
+                <script>
+                    resolve_installation_selection_list();
+                </script>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="view_installation_data()" style="width: 100%;">&#x1F50D Filter</button>
 
-    <!-- Filter Input -->
-    
-    <!-- <div class="input-group flex-nowrap">
-        <span class="input-group-text">&#x1f4c5</span>
-        <select name="date_range_selection" id="date_range_selection">
-          <option value="0">Hoje</option>
-          <option value="L24">Últimas 24 horas</option>
-          <option value="2">Últimos 2 dias</option>
-          <option value="5">Últimos 5 dias</option>
-          <option value="8">Últimos 7 dias</option>
-          <option value="15">Últimos 15 dias</option>
-          <option value="30">Últimos 30 dias</option>
-          <option value="ALL">Tudo</option>
-        </select>
-        <div id="device_select_index_page"></div>
-        
+        </div>
+        <hr />
 
-    <div id="get_device_data_index_page"></div>
-        <button type="button" class="btn btn-secondary" onclick="plot_player_statistics()">&#x1F50D Filter</button>
-    </div> -->
-    <hr />
+        <!-- CHART SELECTION -->
+        <div style="text-align: center">
+            <label for="chart_selection">Selecionar gráfico:</label>
+            <select name="chart_selection" id="chart_selection">
+                <option value="SENSOR_MEASUREMENTS">Leituras dos sensores</option>
+            </select>
+        </div>
 
-     <!-- CHART SELECTION -->
-     <!-- <h3 style="text-align: center">Seleção de gráfico</h3>
-     <div style="text-align: center">
-       <label for="chart_selection">Selecionar gráfico:</label>
-       <select name="chart_selection" id="chart_selection">
-         <option value="SENSOR_MEASUREMENTS">Leituras dos sensores</option>
-       </select>
-     </div> -->
+        <hr class="my-4" />
 
-      <hr class="my-4" />
+        <!-- INSTALLATION RESUME -->
+        <div align="center">
+            <table id="installation_resume_table"></table>
+        </div>
 
-      <!-- DYNAMIC CHART -->
-      <div id="dynamic_chart">
-        <canvas id="DynamicChart" width="350" height="400"></canvas>
-      </div>
+        <hr class="my-4" />
 
+        <!-- DYNAMIC CHART -->
+        <div id="dynamic_chart">
+            <canvas id="DynamicChart" width="350" height="400"></canvas>
+        </div>
+
+        <hr class="my-4" />
+    </section>
       Página em desenvolvimento
 
        

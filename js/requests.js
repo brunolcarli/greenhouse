@@ -48,3 +48,45 @@ function get_map_installations(){
         console.error(err);
     });
 }
+
+
+function get_installation_list(){
+    const payload = '{"query": "query {installations{reference}}"}';
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['installations'];
+    })
+    .catch(err => {
+        console.error(err);
+    });   
+}
+
+
+function get_installation_table_data(reference){
+    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\"){ reference description device{ hardwareType description transmissionCount } }}"}`;
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['installation'];
+    })
+    .catch(err => {
+        console.error(err);
+    });   
+}
+
+
+function get_installation_transmission_data(reference){
+    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\"){ reference device{ transmissions{ ldrSensor temperatureSensor pressure moisture datetimeOrigin} } }}"}`;
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['installation'];
+    })
+    .catch(err => {
+        console.error(err);
+    });   
+}

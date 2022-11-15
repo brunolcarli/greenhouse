@@ -73,7 +73,7 @@ function plot_transmission_values(){
             }
         });
         return chart;
-    })
+    });
 }
 
 
@@ -107,5 +107,68 @@ function plot_world_map_installations(){
         map.interactivity().zoomOnMouseWheel(true);
         map.container("world_map_index_page");
         map.draw();
+    });
+}
+
+
+function plot_installation_transmission_values(reference){
+    return get_installation_transmission_data(reference).then(installation => {
+        const ctx = reset_canvas('DynamicChart', 'dynamic_chart');
+        const ldr_values = [];
+        const temperature_values = [];
+        const pressure_values = [];
+        const moisture_values = [];
+        const dates = [];
+        const transmissions = installation['device']['transmissions'];
+
+        for (let i in transmissions){
+            ldr_values.push(transmissions[i]['ldrSensor']);
+            temperature_values.push(transmissions[i]['temperatureSensor']);
+            pressure_values.push(transmissions[i]['pressure']);
+            moisture_values.push(transmissions[i]['moisture']);
+            dates.push(transmissions[i]['datetimeOrigin']);
+        }
+
+        const data = {
+            labels: dates,
+            datasets: [
+                {
+                    label: 'Luminosidade',
+                    data: ldr_values,
+                    fill: false,
+                    borderColor: 'rgb(175, 92, 99)',
+                    tension: 0.5
+                },
+                {
+                    label: 'Temperatura (C˚)',
+                    data: temperature_values,
+                    fill: false,
+                    borderColor: 'rgb(15, 92, 99)',
+                    tension: 0.5
+                },
+                {
+                    label: 'Pressão',
+                    data: pressure_values,
+                    fill: false,
+                    borderColor: 'rgb(17, 192, 99)',
+                    tension: 0.5
+                },
+                {
+                    label: 'Umidade',
+                    data: moisture_values,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 199)',
+                    tension: 0.5
+                }
+            ]
+        };
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: false
+            }
+        });
+        return chart;
     });
 }
