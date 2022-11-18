@@ -79,7 +79,13 @@ function get_installation_table_data(reference){
 
 
 function get_installation_transmission_data(reference){
-    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\"){ reference device{ transmissions{ ldrSensor temperatureSensor pressure moisture datetimeOrigin} } }}"}`;
+    var date_range = document.getElementById('date_range_selection').value;
+    date_range = resolve_datetime_input(date_range);
+    if (date_range){
+        date_range = ' txDatetimeStart: ' + date_range;
+    }
+
+    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\" ${date_range} ){ reference device{ transmissions{ ldrSensor temperatureSensor pressure moisture datetimeOrigin} } }}"}`;
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)

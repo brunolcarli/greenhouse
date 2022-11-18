@@ -54,7 +54,7 @@ function resolve_installation_selection_list(){
         for (let i in installations){
             installation_selection_html += `<option value="${installations[i]['reference']}">${installations[i]['reference']}</option>`;
         }
-        // installation_selection_html += '</datalist></div><br />';
+
         installation_selection_html += '</datalist><br />';
         installation_selection_div.innerHTML = installation_selection_html;
     });
@@ -75,4 +75,26 @@ function view_installation_data(){
     }
     draw_installation_resume_table(installation_reference);
     plot_installation_transmission_values(installation_reference);
+}
+
+
+function resolve_datetime_input(range){
+    if (range == 'ALL'){
+        return '';
+    }
+
+    let today = new Date();
+    let start_point = new Date(today);
+
+    if (range == '0'){
+        start_point.setHours(0, 0, 0);
+    }
+    else if (range == 'L24'){
+        start_point.setHours(start_point.getHours() - 24);
+    }
+    else {
+        start_point.setDate(start_point.getDate() - range);
+    }
+
+    return ` \\\"${start_point.toISOString()}\\\" `;
 }
