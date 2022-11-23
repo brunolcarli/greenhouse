@@ -61,23 +61,6 @@ function resolve_installation_selection_list(){
 }
 
 
-function view_installation_data(){
-    var installation_reference = $('#InstallationSelectIndexPage').val();
-    // Validate installation input
-    if (!installation_reference){
-        alert('Necessário escolher uma instalação!');
-        return
-    }
-    var inputed = $("#InstallationSelectIndexPageInput").find("option[value='" + installation_reference + "']");
-    if (inputed == null || inputed.length <= 0){
-        alert('Instalação inválida!');
-        return
-    }
-    draw_installation_resume_table(installation_reference);
-    plot_installation_transmission_values(installation_reference);
-}
-
-
 function resolve_datetime_input(range){
     if (range == 'ALL'){
         return '';

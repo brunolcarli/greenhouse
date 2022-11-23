@@ -96,3 +96,22 @@ function get_installation_transmission_data(reference){
         console.error(err);
     });   
 }
+
+function get_installation_ldr_hour_relative_freq(reference){
+    var date_range = document.getElementById('date_range_selection').value;
+    date_range = resolve_datetime_input(date_range);
+    if (date_range){
+        date_range = ' txDatetimeStart: ' + date_range;
+    }
+
+    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\" ${date_range} ){ reference device{ hourRelativeFrequency{ hours ldrRelativeFrequency ldrHighStd ldrLowStd  } } }}"}`;
+    const options = get_request_options(payload);
+    return fetch(URL, options)
+    .then(json)
+    .then(response => {
+        return response['data']['installation'];
+    })
+    .catch(err => {
+        console.error(err);
+    });   
+}
