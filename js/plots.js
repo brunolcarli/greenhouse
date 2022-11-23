@@ -241,11 +241,217 @@ function plot_installation_ldr_hour_rel_freq(query_filter){
 }
 
 
+function plot_installation_temperature_hour_rel_freq(query_filter){
+    return get_installation_temperature_hour_relative_freq(query_filter).then(dataset => {
+        const ctx = reset_canvas('DynamicChart', 'dynamic_chart');
+        
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dataset['device']['hourRelativeFrequency']['hours'],
+                datasets: [
+                    {
+                        label: 'Fr %',
+                        data: dataset['device']['hourRelativeFrequency']['temperatureRelativeFrequency'],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Frequência relativa (%) hora do dia (Período 1H) [Linha]',
+                        data: dataset['device']['hourRelativeFrequency']['temperatureRelativeFrequency'],
+                        fill: false,
+                        borderColor: 'rgb(36, 252, 3)',
+                        tension: 0.5,
+                        type: 'line'
+                    },
+                    {
+                        label: 'Desvio Padrão + (High)',
+                        data: dataset['device']['hourRelativeFrequency']['temperatureHighStd'],
+                        fill: false,
+                        borderColor: 'rgb(252, 3, 3)',
+                        tension: 0.5,
+                        type: 'line'
+                    },
+                    {
+                        label: 'Desvio Padrão - (Low)',
+                        data: dataset['device']['hourRelativeFrequency']['temperatureLowStd'],
+                        fill: false,
+                        borderColor: 'rgb(3, 211, 252)',
+                        tension: 0.5,
+                        type: 'line'
+                    }
+                ]
+            },
+            options: {
+                responsive: false
+            }
+        });
+        return chart;
+    });
+}
+
+
+function plot_installation_pressure_hour_rel_freq(query_filter){
+    return get_installation_pressure_hour_relative_freq(query_filter).then(dataset => {
+        const ctx = reset_canvas('DynamicChart', 'dynamic_chart');
+        
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dataset['device']['hourRelativeFrequency']['hours'],
+                datasets: [
+                    {
+                        label: 'Fr %',
+                        data: dataset['device']['hourRelativeFrequency']['pressureRelativeFrequency'],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Frequência relativa (%) hora do dia (Período 1H) [Linha]',
+                        data: dataset['device']['hourRelativeFrequency']['pressureRelativeFrequency'],
+                        fill: false,
+                        borderColor: 'rgb(36, 252, 3)',
+                        tension: 0.5,
+                        type: 'line'
+                    },
+                    {
+                        label: 'Desvio Padrão + (High)',
+                        data: dataset['device']['hourRelativeFrequency']['pressureHighStd'],
+                        fill: false,
+                        borderColor: 'rgb(252, 3, 3)',
+                        tension: 0.5,
+                        type: 'line'
+                    },
+                    {
+                        label: 'Desvio Padrão - (Low)',
+                        data: dataset['device']['hourRelativeFrequency']['pressureLowStd'],
+                        fill: false,
+                        borderColor: 'rgb(3, 211, 252)',
+                        tension: 0.5,
+                        type: 'line'
+                    }
+                ]
+            },
+            options: {
+                responsive: false
+            }
+        });
+        return chart;
+    });
+}
+
+
+function plot_installation_moisture_hour_rel_freq(query_filter){
+    return get_installation_moisture_hour_relative_freq(query_filter).then(dataset => {
+        const ctx = reset_canvas('DynamicChart', 'dynamic_chart');
+        
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dataset['device']['hourRelativeFrequency']['hours'],
+                datasets: [
+                    {
+                        label: 'Fr %',
+                        data: dataset['device']['hourRelativeFrequency']['moistureRelativeFrequency'],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Frequência relativa (%) hora do dia (Período 1H) [Linha]',
+                        data: dataset['device']['hourRelativeFrequency']['moistureRelativeFrequency'],
+                        fill: false,
+                        borderColor: 'rgb(36, 252, 3)',
+                        tension: 0.5,
+                        type: 'line'
+                    },
+                    {
+                        label: 'Desvio Padrão + (High)',
+                        data: dataset['device']['hourRelativeFrequency']['moistureHighStd'],
+                        fill: false,
+                        borderColor: 'rgb(252, 3, 3)',
+                        tension: 0.5,
+                        type: 'line'
+                    },
+                    {
+                        label: 'Desvio Padrão - (Low)',
+                        data: dataset['device']['hourRelativeFrequency']['moistureLowStd'],
+                        fill: false,
+                        borderColor: 'rgb(3, 211, 252)',
+                        tension: 0.5,
+                        type: 'line'
+                    }
+                ]
+            },
+            options: {
+                responsive: false
+            }
+        });
+        return chart;
+    });
+}
+
+
+//
+
 function update_dynamic_chart(query_filter, value){
 
     const valid_options = {
         SENSOR_MEASUREMENTS: plot_installation_transmission_values,
         LDR_HOUR_REL_FREQ: plot_installation_ldr_hour_rel_freq,
+        TEMP_HOUR_REL_FREQ: plot_installation_temperature_hour_rel_freq,
+        PRES_HOUR_REL_FREQ: plot_installation_pressure_hour_rel_freq,
+        MOIS_HOUR_REL_FREQ: plot_installation_moisture_hour_rel_freq,
     };
     valid_options[value](query_filter);
 }
