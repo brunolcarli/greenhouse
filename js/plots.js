@@ -91,20 +91,6 @@ function get_icon(img_path){
 }
 
 
-function get_ldr_icon(value) {
-    if (value < 40)
-        {return get_icon('static/img/dark.png')}
-    else if (40 <= value < 800)
-        {return get_icon('static/img/dim.png')}
-    else if (800 <= value < 2000)
-        {return get_icon('static/img/light.png')}
-    else if (2000 <= value < 3200)
-        {return get_icon('static/img/bright.png')}
-    else
-        {return get_icon('static/img/very_bright.png')}
-}
-
-
 function plot_world_map_installations(){
     var map = L.map('map').setView([-25.4412257, -49.1691257], 3);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -119,6 +105,7 @@ function plot_world_map_installations(){
             var long = response[i]['longitude'];
             var tx_count = response[i]['device']['transmissionCount'];
             var last_ldr = response[i]['device']['lastTransmission'];
+            var device_id = response[i]['device']['deviceId'];
             if (last_ldr){
                 last_ldr = last_ldr['ldrSensor'];
             } else {
@@ -129,7 +116,8 @@ function plot_world_map_installations(){
                 [lat, long],
                 {
                     title: `${reference}\nTransmissões: ${tx_count}`,
-                    icon: get_ldr_icon(last_ldr)
+                    icon: get_icon(get_ldr_icon(last_ldr)),
+                    alt: device_id
                 }
             ).addTo(map);
             // dataset.push({
