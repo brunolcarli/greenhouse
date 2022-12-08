@@ -37,7 +37,7 @@ function get_transmission_values(){
 
 
 function get_map_installations(){
-    const payload = '{"query": "query{installations{reference latitude longitude device {transmissionCount}}}"}';
+    const payload = '{"query": "query{installations{reference latitude longitude device {transmissionCount lastTransmission{ ldrSensor } }}}"}';
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)

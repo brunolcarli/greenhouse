@@ -77,36 +77,101 @@ function plot_transmission_values(){
 }
 
 
+function get_icon(img_path){
+    var custom_icon = L.icon({
+        iconUrl: img_path,
+        iconSize: [32, 32],
+        // iconAnchor: [22, 94],
+        // popupAnchor: [-3, -76],
+        // shadowUrl: 'my-icon-shadow.png',
+        // shadowSize: [68, 95],
+        // shadowAnchor: [22, 94]
+    });
+    return custom_icon;
+}
+
+
+function get_ldr_icon(value) {
+    if (value < 40)
+        {return get_icon('static/img/dark.png')}
+    else if (40 <= value < 800)
+        {return get_icon('static/img/dim.png')}
+    else if (800 <= value < 2000)
+        {return get_icon('static/img/light.png')}
+    else if (2000 <= value < 3200)
+        {return get_icon('static/img/bright.png')}
+    else
+        {return get_icon('static/img/very_bright.png')}
+}
+
+
 function plot_world_map_installations(){
-    get_map_installations().then(data => {
-        var dataset = [];
-        for (let i in data){
-            var reference = data[i]['reference'];
-            var lat = data[i]['latitude'];
-            var long = data[i]['longitude'];
-            var tx_count = data[i]['device']['transmissionCount'];
-            dataset.push({
-                lat: lat,
-                long: long,
-                name: reference,
-                value: `Transmissões: ${tx_count}`
-            });
+    var map = L.map('map').setView([-25.4412257, -49.1691257], 3);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    get_map_installations().then(response => {
+        // LEAFLET MAP
+        for (let i in response){
+            var reference = response[i]['reference'];
+            var lat = response[i]['latitude'];
+            var long = response[i]['longitude'];
+            var tx_count = response[i]['device']['transmissionCount'];
+            var last_ldr = response[i]['device']['lastTransmission'];
+            if (last_ldr){
+                last_ldr = last_ldr['ldrSensor'];
+            } else {
+                last_ldr = 0;
+            }
+
+            var marker = L.marker(
+                [lat, long],
+                {
+                    title: `${reference}\nTransmissões: ${tx_count}`,
+                    icon: get_ldr_icon(last_ldr)
+                }
+            ).addTo(map);
+            // dataset.push({
+            //     lat: lat,
+            //     long: long,
+            //     name: reference,
+            //     value: `Transmissões: ${tx_count}`
+            // });
         }
-        var map = anychart.map();
-        map.geoData(anychart.maps.brazil);
-        map.title().listen("click", function () {
-            // Zoom map in 2 times.
-            map.zoom(2);
-        });
 
-        // Creates the marker series
-        var series_lat_long = map.marker(dataset);
-        series_lat_long.tooltip({title: false, separator: false});
 
-        map.title("Dispositivos instalados");
-        map.interactivity().zoomOnMouseWheel(true);
-        map.container("world_map_index_page");
-        map.draw();
+        // ANYCHART MAP 
+
+        // var dataset = [];
+        // for (let i in data){
+        //     var reference = data[i]['reference'];
+        //     var lat = data[i]['latitude'];
+        //     var long = data[i]['longitude'];
+        //     var tx_count = data[i]['device']['transmissionCount'];
+        //     dataset.push({
+        //         lat: lat,
+        //         long: long,
+        //         name: reference,
+        //         value: `Transmissões: ${tx_count}`
+        //     });
+        // }
+
+        // var map = anychart.map();
+        // map.geoData(anychart.maps.brazil);
+        // map.title().listen("click", function () {
+        //     // Zoom map in 2 times.
+        //     map.zoom(2);
+        // });
+
+        // // Creates the marker series
+        // var series_lat_long = map.marker(dataset);
+        // series_lat_long.tooltip({title: false, separator: false});
+
+        // map.title("Dispositivos instalados");
+        // map.interactivity().zoomOnMouseWheel(true);
+        // map.container("world_map_index_page");
+        // map.draw();
     });
 }
 
