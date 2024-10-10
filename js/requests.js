@@ -1,5 +1,5 @@
 
-const URL = 'https://iotapi.brunolcarli.repl.co/graphql/';
+var URL = 'https://6f067135-6b5d-4730-a677-cc6fdf7d637c-00-w4tk49vukost.picard.replit.dev/graphql/';
 
 
 
