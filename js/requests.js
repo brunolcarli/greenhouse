@@ -85,7 +85,7 @@ function get_installation_transmission_data(reference){
         date_range = ' txDatetimeStart: ' + date_range;
     }
 
-    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\" ${date_range} ){ reference device{ transmissions{ ldrSensor temperatureSensor pressure moisture datetimeOrigin} } }}"}`;
+    const payload = `{"query": "query{installation(reference: \\\"${reference}\\\" ${date_range} ){ reference device{ transmissions } }}"}`;
     const options = get_request_options(payload);
     return fetch(URL, options)
     .then(json)
